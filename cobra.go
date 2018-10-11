@@ -19,6 +19,7 @@ package cobra
 import (
 	"fmt"
 	"io"
+	"os"
 	"reflect"
 	"strconv"
 	"strings"
@@ -34,9 +35,10 @@ var templateFuncs = template.FuncMap{
 	"rpad":                    rpad,
 	"gt":                      Gt,
 	"eq":                      Eq,
+	"add":                     add,
 }
 
-var initializers []func()
+var initializers []func(*Command)
 
 // EnablePrefixMatching allows to set automatic prefix matching. Automatic prefix matching can be a dangerous thing
 // to automatically enable in CLI tools.
@@ -72,7 +74,7 @@ func AddTemplateFuncs(tmplFuncs template.FuncMap) {
 
 // OnInitialize sets the passed functions to be run when each command's
 // Execute method is called.
-func OnInitialize(y ...func()) {
+func OnInitialize(y ...func(*Command)) {
 	initializers = append(initializers, y...)
 }
 
@@ -106,6 +108,16 @@ func Gt(a interface{}, b interface{}) bool {
 	}
 
 	return left > right
+}
+
+func add(a, b int) int {
+	return a + b
+}
+
+//NeedComplete need complete or not
+func NeedComplete() bool {
+	line := os.Getenv("COMP_LINE")
+	return line != ""
 }
 
 // FIXME Eq is unused by cobra and should be removed in a version 2. It exists only for compatibility with users of cobra.
