@@ -55,7 +55,7 @@ func init() {
 	rootCmd.AddCommand(initCmd)
 }
 
-func initConfig() {
+func initConfig(cmd *cobra.Command) {
 	if cfgFile != "" {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
