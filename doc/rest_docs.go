@@ -94,7 +94,7 @@ func GenReSTCustom(cmd *cobra.Command, w io.Writer, linkHandler func(string, str
 		return err
 	}
 	if hasSeeAlso(cmd) {
-		buf.WriteString("SEE ALSO\n")
+		buf.WriteString("Available Commands\n")
 		buf.WriteString("~~~~~~~~\n\n")
 		if cmd.HasParent() {
 			parent := cmd.Parent()
