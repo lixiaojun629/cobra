@@ -35,7 +35,7 @@ func GenDoukuTreeCustom(index int, cmd *cobra.Command, dir string, filePrepender
 		}
 	}
 
-	basename := strings.Replace(cmd.CommandPath(), " ", "/", -1) + ".txt"
+	basename := strings.Replace(cmd.CommandPath(), " ", "/", -1) + ".md"
 	filename := filepath.Join(dir, basename)
 
 	fp, _ := filepath.Split(filename)
@@ -54,10 +54,6 @@ func GenDoukuTreeCustom(index int, cmd *cobra.Command, dir string, filePrepender
 	}
 
 	if _, err := io.WriteString(f, fmt.Sprintf("{{indexmenu_n>%d}}\n\n", index)); err != nil {
-		return err
-	}
-
-	if _, err := io.WriteString(f, fmt.Sprintf("====== %s ======\n\n", cmd.Name())); err != nil {
 		return err
 	}
 
